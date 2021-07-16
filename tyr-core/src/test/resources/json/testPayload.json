@@ -2,6 +2,7 @@
   "repository": {
     "full_name": "xjusko/test-repo"
   },
+  "number": 1,
   "pull_request": {
     "title": "Test PR",
     "body": "Test description\r\nNext line\r\n",
@@ -11,7 +12,6 @@
     },
     "base": {
       "ref": "test-flash"
-    },
-    "number": "1"
+    }
   }
 }

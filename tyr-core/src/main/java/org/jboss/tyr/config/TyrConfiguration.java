@@ -31,4 +31,7 @@ public interface TyrConfiguration {
 
     @ConfigProperty(name = "additional-resources")
     Optional<String> additionalResources();
+
+    @ConfigProperty(name = "github.add.label", defaultValue = "true")
+    boolean labelingEnabled();
 }

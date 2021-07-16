@@ -122,6 +122,10 @@ public class TemplateChecker {
     private List<Check> registerChecks(Format format) {
         List<Check> checks = new ArrayList<>();
 
+        if (configuration.labelingEnabled()) {
+            checks.add(addLabel);
+        }
+
         if (format.getTitle() != null) {
             checks.add(new TitleCheck(format.getTitle()));
         }
@@ -131,12 +135,10 @@ public class TemplateChecker {
                     format.getDescription().getOptionalRows()));
         }
 
-        if (!configuration.commitChecksDisabled() && format.getCommit() != null){
+        if (!configuration.commitChecksDisabled() && format.getCommit() != null) {
             commitMessagesCheck.setRegex(format.getCommit());
             checks.add(commitMessagesCheck);
         }
-
-        checks.add(addLabel);
 
         checks.addAll(additionalResourcesLoader.getAdditionalChecks());
 

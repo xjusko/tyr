@@ -40,7 +40,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.io.StringReader;
 import java.net.URI;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Named("default")
@@ -101,7 +101,7 @@ public class GitHubService {
 
         WebTarget target = client.target(labelUri);
 
-        Entity<List<Label>> json = Entity.json(Arrays.asList(new Label(targetBranch, "Target branch")));
+        Entity<List<Label>> json = Entity.json(Collections.singletonList(new Label(targetBranch, "Target branch")));
 
         log.debug("Updating label: " + json);
         Response response = null;
@@ -115,7 +115,7 @@ public class GitHubService {
             log.info("Pull request label update: " + response.getStatus());
             log.debug("Github response: " + response.readEntity(String.class));
         } catch (Throwable e) {
-            log.error("Cannot update GitHub status", e);
+            log.error("Cannot add label to pull request", e);
         } finally {
             if (response != null) {
                 response.close();

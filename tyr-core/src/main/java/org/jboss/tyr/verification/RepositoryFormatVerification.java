@@ -21,7 +21,7 @@ public class RepositoryFormatVerification implements Verification {
 
     @Override
     public void verify(FormatYaml formatYaml) throws InvalidConfigurationException {
-        if (!formatYaml.getRepository().matches("^[a-zA-Z0-9_]*/[a-zA-Z0-9_-]*$"))
+        if (!formatYaml.getRepository().matches("^[a-zA-Z0-9_-]*/[a-zA-Z0-9_-]*$"))
             throw new InvalidConfigurationException("Wrong repository format in configuration file");
     }
 }

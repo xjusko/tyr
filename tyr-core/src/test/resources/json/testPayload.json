@@ -1,10 +1,17 @@
 {
+  "repository": {
+    "full_name": "xjusko/test-repo"
+  },
   "pull_request": {
     "title": "Test PR",
     "body": "Test description\r\nNext line\r\n",
     "commits": 1,
     "head": {
       "sha": "529f3e7fe768ce2e4be204u4245a50918c299f1e"
-    }
+    },
+    "base": {
+      "ref": "test-flash"
+    },
+    "number": "1"
   }
 }

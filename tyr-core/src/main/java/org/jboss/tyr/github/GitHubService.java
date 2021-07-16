@@ -18,6 +18,7 @@ package org.jboss.tyr.github;
 import org.jboss.logging.Logger;
 import org.jboss.tyr.InvalidPayloadException;
 import org.jboss.tyr.model.CommitStatus;
+import org.jboss.tyr.model.Label;
 import org.jboss.tyr.model.StatusPayload;
 import org.jboss.tyr.config.TyrConfiguration;
 import org.jboss.tyr.model.Utils;
@@ -39,6 +40,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import java.io.StringReader;
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
 @Named("default")
 @ApplicationScoped
@@ -62,7 +65,6 @@ public class GitHubService {
                 .build();
 
         WebTarget target = client.target(statusUri);
-
         Entity<StatusPayload> json = Entity.json(new StatusPayload(status.toString(),
                 targetUrl, description, context));
 
@@ -76,6 +78,41 @@ public class GitHubService {
                 .post(json);
 
             log.info("Github status update: " + response.getStatus());
+            log.debug("Github response: " + response.readEntity(String.class));
+        } catch (Throwable e) {
+            log.error("Cannot update GitHub status", e);
+        } finally {
+            if (response != null) {
+                response.close();
+            }
+        }
+    }
+
+    public void AddLabelToPullRequest(String repository, int pullRequestNumber, String targetBranch) {
+        Client client = ClientBuilder.newClient();
+        URI labelUri = UriBuilder
+                .fromUri(Utils.GITHUB_BASE)
+                .path("/repos")
+                .path("/" + repository)
+                .path("/issues")
+                .path("/" + pullRequestNumber)
+                .path("/labels")
+                .build();
+
+        WebTarget target = client.target(labelUri);
+
+        Entity<List<Label>> json = Entity.json(Arrays.asList(new Label(targetBranch, "Target branch")));
+
+        log.debug("Updating label: " + json);
+        Response response = null;
+
+        try {
+            response = target.request()
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
+                    .header(HttpHeaders.AUTHORIZATION, "token " + configuration.oauthToken())
+                    .post(json);
+
+            log.info("Pull request label update: " + response.getStatus());
             log.debug("Github response: " + response.readEntity(String.class));
         } catch (Throwable e) {
             log.error("Cannot update GitHub status", e);

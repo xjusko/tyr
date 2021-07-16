@@ -61,6 +61,9 @@ public class TemplateChecker {
     CommitMessagesCheck commitMessagesCheck;
 
     @Inject
+    AddLabel addLabel;
+
+    @Inject
     AdditionalResourcesLoader additionalResourcesLoader;
 
     @Inject
@@ -132,6 +135,8 @@ public class TemplateChecker {
             commitMessagesCheck.setRegex(format.getCommit());
             checks.add(commitMessagesCheck);
         }
+
+        checks.add(addLabel);
 
         checks.addAll(additionalResourcesLoader.getAdditionalChecks());
 

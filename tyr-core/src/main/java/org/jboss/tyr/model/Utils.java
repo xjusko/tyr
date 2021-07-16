@@ -38,6 +38,10 @@ public class Utils {
     public static final String BASE = "base";
     public static final String COMMITS_URL = "commits_url";
 
+    //Repository payload
+    public static final String REPOSITORY = "repository";
+    public static final String FULL_NAME = "full_name";
+
     //Issue payload
     public static final String ISSUE = "issue";
     public static final String COMMENT = "comment";

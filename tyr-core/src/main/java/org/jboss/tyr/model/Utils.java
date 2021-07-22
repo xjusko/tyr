@@ -37,6 +37,8 @@ public class Utils {
     public static final String REF = "ref";
     public static final String BASE = "base";
     public static final String COMMITS_URL = "commits_url";
+    public static final String LABELS = "labels";
+    public static final String NAME = "name";
 
     //Repository payload
     public static final String REPOSITORY = "repository";

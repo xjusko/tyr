@@ -85,10 +85,11 @@ public class GitHubService {
             if (response != null) {
                 response.close();
             }
+            client.close();
         }
     }
 
-    public void AddLabelToPullRequest(String repository, int pullRequestNumber, String targetBranch) {
+    public void addLabelToPullRequest(String repository, int pullRequestNumber, String targetBranch) {
         Client client = ClientBuilder.newClient();
         URI labelUri = UriBuilder
                 .fromUri(Utils.GITHUB_BASE)
@@ -120,6 +121,7 @@ public class GitHubService {
             if (response != null) {
                 response.close();
             }
+            client.close();
         }
     }
 
@@ -159,6 +161,7 @@ public class GitHubService {
             if (response != null) {
                 response.close();
             }
+            client.close();
         }
     }
 

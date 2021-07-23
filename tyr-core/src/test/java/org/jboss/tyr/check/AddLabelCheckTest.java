@@ -1,7 +1,6 @@
 package org.jboss.tyr.check;
 
 import io.quarkus.test.junit.QuarkusTest;
-import io.quarkus.test.junit.mockito.InjectMock;
 import io.quarkus.test.junit.mockito.InjectSpy;
 import org.jboss.tyr.InvalidPayloadException;
 import org.jboss.tyr.TestUtils;
@@ -16,10 +15,10 @@ import javax.inject.Inject;
 
 
 @QuarkusTest
-public class AddLabelTest {
+public class AddLabelCheckTest {
 
     @Inject
-    AddLabel addLabel;
+    AddLabelCheck addLabelCheck;
 
     @InjectSpy
     GitHubService gitHubService;
@@ -35,13 +34,13 @@ public class AddLabelTest {
         int pullRequestNumber = TestUtils.TEST_PAYLOAD.getInt(Utils.NUMBER);
         String testRepository = TestUtils.TEST_PAYLOAD.getJsonObject(Utils.REPOSITORY).getString(Utils.FULL_NAME);
 
-        addLabel.check(TestUtils.TEST_PAYLOAD);
+        addLabelCheck.check(TestUtils.TEST_PAYLOAD);
         Mockito.verify(gitHubService).addLabelToPullRequest
                 (testRepositoryCaptor.capture(), pullRequestNumberCaptor.capture(), targetBranchCaptor.capture());
 
         Assertions.assertEquals(targetBranch, targetBranchCaptor.getValue());
         Assertions.assertEquals(pullRequestNumber, pullRequestNumberCaptor.getValue());
         Assertions.assertEquals(testRepository, testRepositoryCaptor.getValue());
-        Assertions.assertNull(addLabel.check(TestUtils.TEST_PAYLOAD), "Null expected");
+        Assertions.assertNull(addLabelCheck.check(TestUtils.TEST_PAYLOAD), "Null expected");
     }
 }

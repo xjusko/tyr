@@ -12,7 +12,7 @@ import javax.json.JsonObject;
 import javax.json.JsonValue;
 
 @ApplicationScoped
-public class AddLabel implements Check {
+public class AddLabelCheck implements Check {
 
     @Inject
     GitHubService gitHubService;
@@ -21,11 +21,14 @@ public class AddLabel implements Check {
     public String check(JsonObject payload) throws InvalidPayloadException {
         JsonArray labels = payload.getJsonObject(Utils.PULL_REQUEST).getJsonArray(Utils.LABELS);
         String targetBranch = payload.getJsonObject(Utils.PULL_REQUEST).getJsonObject(Utils.BASE).getString(Utils.REF);
-        for (JsonValue label : labels) {
-            if (label.asJsonObject().getString(Utils.NAME).equals(targetBranch)) {
-                return null;
+        if (labels != null) {
+            for (JsonValue label : labels) {
+                if (label.asJsonObject().getString(Utils.NAME).equals(targetBranch)) {
+                    return null;
+                }
             }
         }
+
 
         gitHubService.addLabelToPullRequest(
                 payload.getJsonObject(Utils.REPOSITORY).getString(Utils.FULL_NAME),

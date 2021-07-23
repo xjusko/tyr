@@ -61,7 +61,7 @@ public class TemplateChecker {
     CommitMessagesCheck commitMessagesCheck;
 
     @Inject
-    AddLabel addLabel;
+    AddLabelCheck addLabelCheck;
 
     @Inject
     AdditionalResourcesLoader additionalResourcesLoader;
@@ -123,7 +123,7 @@ public class TemplateChecker {
         List<Check> checks = new ArrayList<>();
 
         if (configuration.labelingEnabled()) {
-            checks.add(addLabel);
+            checks.add(addLabelCheck);
         }
 
         if (format.getTitle() != null) {

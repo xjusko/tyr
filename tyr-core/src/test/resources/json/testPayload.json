@@ -12,7 +12,6 @@
     },
     "base": {
       "ref": "test-flash"
-    },
-    "labels": [{"name": "test-flash"}]
+    }
   }
 }
